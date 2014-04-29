@@ -1,0 +1,1339 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Google Maps - Big Data, GIS and AngularJS Development Strategies</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="css/webinar.css">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+        if( window.location.search.match( /print-pdf/gi ) ) {
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = 'css/print/pdf.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="clevertech-header">
+    <div class="background">&nbsp;</div>
+    <div class="forground">
+        <div class="title">
+            How to use Google Maps and Big Data
+        </div>
+        <div class="logo">
+            <img src="images/clevertech-logo.png"/>
+        </div>
+    </div>
+</div>
+
+<div class="reveal">
+
+<!-- Quick introduction to Google Maps -->
+
+<div class="slides">
+
+<section>
+    <h1>
+        <img class="clear-img" src="images/clevertech-logo-white.png" height="120"/>
+    </h1>
+    <h1 style="margin-bottom: 60px;">Webinar</h1>
+
+    <h2>Google Maps - JavaScript API</h2>
+    <h3>Big Data, GIS and AngularJS Development Strategies</h3>
+</section>
+
+<!--CT Intro-->
+<section>
+    <div class="intro-container">
+        <div class="kuty">
+            <div class="img"></div>
+            <div class="intro">
+               <p>
+                   <strong>Kuty Shalev</strong>, CEO
+               </p>
+                <p>
+                    Founded Clevertech in 2000, Inc 5000 Awardee.
+                </p>
+                <p>
+                    Grew to 50+ remote developers, designers, and analysts over six continents.
+                </p>
+            </div>
+        </div>
+
+        <div class="nazar">
+            <div class="img"></div>
+            <div class="intro">
+                <p>
+                    <strong>Nazar Aziz</strong>, Senior Developer Clevertech
+                </p>
+                <p>
+                    Loves to tackle big-data challenges and celebrates the accomplishment of figuring out a lean solution.
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <aside class="notes">
+        nazar:
+        <ul>
+            <li>started programming in mid 80s - when games were printed in magazines as source code and had to be typed in to play</li>
+            <li>seriously got programming in 88, when I discovered Fractals and Fractal Geometry</li>
+            <li>Coding for profit since 95</li>
+            <li>I love deconstructing business requirements, models, and generally how everything works</li>
+            <li>web programming: 2001 - IIS and ISAPI DLLs, 2005 PHP - Core Xoops CMS committer, 2011 - Ruby On Rails 1-> 3m 2011 - JavaScript, AngularJS / NodeJs</li>
+        </ul>
+    </aside>
+
+</section>
+
+<section>
+    <h1>You'll Learn</h1>
+
+    <ul>
+        <li>Overview of Google Maps API, GIS, public GIS data sources, and a big data case study </li>
+        <li style="margin-top: 30px;">Using AngularJS to build Google Map Components</li>
+    </ul>
+
+    <aside class="notes">
+        <ul>
+            <li><strong>non technical</strong></li>
+            <li>target: product managers and entrepreneurs: showcase maps api capabilities   </li>
+            <li>Introduction to Google Maps & highlight flexibility</li>
+            <li>Overview of API features: overlays, layers and services</li>
+            <li>GIS (Geographic Information System) examples</li>
+            <li>Public GIS data sources</li>
+            <li>Case study: visualising 150,000,000,000 data points</li>
+        </ul>
+        <ul>
+            <li><strong>technical</strong></li>
+            <li>Maps API Code examples</li>
+            <li>Introduce Web Components and AngularJS</li>
+            <li>an example of how we use AngularJS with Google Maps API </li>
+        </ul>
+    </aside>
+</section>
+
+
+<section>
+    <section>
+        <h2>Before Google Maps</h2>
+        <p>
+            <img src="images/here-be-dragons.jpg" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Maps and mapping wasn't ubiquitous</p>
+            <p>Concept of location based services didn't exist</p>
+            <p>concept of a un-explored world was common</p>
+        </aside>
+    </section>
+
+    <section>
+        <img src="images/joey-map.jpg"/>
+
+        <aside class="notes">
+            <p>Interacting with a map wasn't common place, nor intuitive</p>
+            <p>I learnt orienteering being in the outdoorsman's club at school, led by John Howel, my math teacher and an ex british serviceman</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>In 2004, enter Keyhole 2 LT</h2>
+        <p>
+            <img height="500" src="images/keyhole-mapping.jpg" alt=""/>
+        </p>
+        <small>
+            Acquired by Google in 2004, then...
+        </small>
+
+        <aside class="notes">
+            <p>Two things happened in the mid naughties: Keyhole launched their earth satellite images viewer - $70 dollars</p>
+            <p>Acquired by Google and renamed: Google Earth</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>In 2005, Google launches Google Maps</h2>
+        <p>
+            <img src="images/googlemaps-2005.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Later that year Google acquires the Rasmussen brother's startup and launches a Javascript based service in 2005</p>
+            <p>houseingmap.com and chicagocrime.org reverse engineer Google maps map their data. Google releases v1 API shortly after. </p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>In 2014, Maps are Ubiquitous</h2>
+        <img src="images/before-google-maps.jpg" />
+
+        <aside class="notes">
+            <p>A generation where Google Maps has always existed</p>
+            <p>Increasing number of services rely on google maps</p>
+        </aside>
+    </section>
+
+</section>
+
+<!-- Google Maps API V3 Introduction  -->
+<section>
+
+    <section>
+        <h2>2014 - Google Maps</h2>
+        <h3>JavaScript API Version 3</h3>
+
+        <ul>
+            <li>Free for websites with less than 25,000 map loads per day</li>
+            <li>Highly customizable: standard control positions, custom controls, styles, etc</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Custom Styles</h2>
+        <p>
+            <img src="images/map-styles.png" alt=""/>
+        </p>
+    </section>
+
+</section>
+
+<!--Drawing Primitives-->
+
+<section>
+    <section>
+        <h2>Major API Features</h2>
+
+        <ul>
+            <li>Mobile</li>
+            <li>Overlays</li>
+            <li>Layers</li>
+            <li>Services</li>
+        </ul>
+
+        <aside class="notes">
+            Next I'd like to go through major Map API features... but before I do that I want to briefly touch on mobile
+        </aside>
+    </section>
+
+    <section>
+        <h2>Mobile</h2>
+
+        <ul>
+            <li>JavaScript v3 API designed for Desktop and Mobile</li>
+            <li>Native iOS SDK</li>
+            <li>Native Android SDK</li>
+        </ul>
+
+        <aside class="notes">
+            <p>Although this talk is aimed as desktop browsers, the JavaScript API is optimised for <strong>both</strong> desktop and mobile browsers.</p>
+            <p>Google also provides native SDKs for both iOS and Android</p>
+        </aside>
+    </section>
+</section>
+
+<!--Overlays-->
+
+<section>
+    <section>
+        <h2>Overlays</h2>
+
+        <aside class="notes">
+            <p>Overlays: mechanism for drawing on Google Maps. These include points, lines, areas and collections</p>
+            <p>I'll run through the most common API overlays</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Marker</h2>
+        <p>
+            <img src="images/map-overlays-marker.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Describes a single latitude and longitude</p>
+            <p>interactive: info-windows, drag & drop</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Custom Marker</h2>
+        <p>
+            <img src="images/map-overlays-marker2.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Markers can be customised</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Polyline</h2>
+        <p>
+            <img src="images/map-overlays-polyline.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>describes an open collection of latitude and longitude points</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Polygon</h2>
+        <p>
+            <img src="images/map-overlays-polygon.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Similar to polylines byt describes an area defined by a collection of latitude and longitude points</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Circle</h2>
+        <p>
+            <img src="images/map-overlays-circle.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Api provides three additional drawing primitives:</p>
+            <p>Circle</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Rectangle</h2>
+        <p>
+            <img src="images/map-overlays-rectangle.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Rectangle</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Adjustable Rectangle</h2>
+        <p>
+            <img src="images/map-overlays-rectangle2.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Ground Overlay</h2>
+        <p>
+            <img src="images/map-overlays-ground.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Custom overlays: geographically fixed images</p>
+            <p>can be used for custom tiles or to overlay custom maps</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<!--Layers-->
+
+<section>
+    <section>
+        <h2>Layers</h2>
+
+        <aside class="notes">
+            <p>layers represent a collection of related data as a single entity</p>
+            <p>API provides functionality to define custom layers</p>
+            <p>and Google provides several layers</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>KML Layer</h2>
+        <p>
+            <img src="images/map-layers-kml.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>render data defined in a publicly accessible KML (Keyhole Markup Language - XML like) file</p>
+            <p>Comes with limitations</p>
+            <ul>
+                <li>3MB max KMZ file size</li>
+                <li>10MB max uncompressed size</li>
+                <li>limits 10-20 KML layers per map - depending on content</li>
+                <li>Mobile limitations</li>
+            </ul>
+        </aside>
+    </section>
+
+    <section>
+        <h2>GeoJSON Dynamic Layer</h2>
+        <p>
+            <img src="images/map-layers-dynamic.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>format for encoding geographic data using JSON</p>
+            <p>recent API addition</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Heatmap</h2>
+        <p>
+            <img src="images/map-layers-heatmap.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Live Traffic</h2>
+        <p>
+            <img src="images/map-layers-traffic.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Bicycle Layer</h2>
+        <p>
+            <img src="images/map-layers-bike.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Transit Layer</h2>
+        <p>
+            <img src="images/map-layers-transit.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Live Weather</h2>
+        <p>
+            <img src="images/map-layers-weather.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Panoramio</h2>
+        <p>
+            <img src="images/map-layers-pano.png" alt=""/>
+        </p>
+    </section>
+
+    <section>
+        <h2>Fusion Tables</h2>
+        <p>
+            <img src="images/map-layers-fusion-tables.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>easily visualise and render large-ish data on the server</p>
+            <p>ability to import data from spreadsheets, CSV or KML</p>
+            <p>can share data</p>
+
+            limitations
+            <ul>
+                <li>maps first 100,000 rows of data</li>
+                <li>table cannot exceed 250MB</li>
+                <li>best suited for static data although API provides update support.</li>
+            </ul>
+
+        </aside>
+
+    </section>
+
+</section>
+
+<!--services-->
+
+<section>
+
+    <h2>Services</h2>
+    <ul>
+        <li>Geocoding and Reverse Geocoding</li>
+        <li>Directions</li>
+        <li>Street View</li>
+        <li>AdSense via Maps Ad Unit</li>
+        <li>Drawing Library</li>
+        <li>Plus more</li>
+    </ul>
+
+    <aside class="notes">
+        <p>Geocoding - address lookup. Both ways lat/lng -> address and address -> lat/lng</p>
+        <p>Travel directions for both desktop and mobile</p>
+        <p>Monetise maps apps via geographically placed Ads</p>
+        <p>Drawing library: draw primitives (circle, lines, polygons, markers)</p>
+    </aside>
+
+
+</section>
+
+<!--GIS - Introduction and brief explanation-->
+
+<section>
+
+    <section>
+        <h2>GIS</h2>
+        <p>
+            A Geographic Information System (GIS) is a computer system designed to capture, store, manipulate, analyze, manage, and present all types of geographical data.
+        </p>
+
+    </section>
+
+    <section>
+        <h2>London Cholera outbreak</h2>
+        <p>
+            <img src="images/snow-cholera-map.jpg" height="550"/>
+            <div>Circa 1854 - John Snow</div>
+        </p>
+
+        <aside class="notes">
+            <p> First use of GIS. John deduced that the cause of the outbreak was at the epicenter of his map, which pointed to a contaminated water pump. </p>
+            <p> John disabled the pump, containing the outbreak. </p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Topography and Geographic Features</h2>
+        <p>
+            <img src="images/gis-layers-forest.jpg" alt=""/>
+        </p>
+
+        <aside class="notes">
+            Example shows geographic features and elevation
+        </aside>
+    </section>
+    
+    <section>
+        <h2>More Examples</h2>
+        <p>
+            <img src="images/gis-layers-more-examples.jpg" height="640"/>
+        </p>
+
+        <aside class="notes">
+            <ul>
+                <li>terrain</li>
+                <li>statistical data: rainfall, population, property prices, crime, etc..</li>
+                <li>political boundaries</li>
+                <li>administrative areas</li>
+                <li>school districts</li>
+                <li>land ownership</li>
+                <li>more...</li>
+            </ul>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <h2>GIS Data Sources</h2>
+
+    <ul>
+        <li>United States Census Bureau - TIGER Products</li>
+        <li>Natural Earth</li>
+        <li>Global Map</li>
+        <li>Open Topography</li>
+        <li>More ...</li>
+    </ul>
+
+</section>
+
+<!--GIS Data source in the US - TIGER Products-->
+
+<section>
+    <section>
+        <h2>United States Census Bureau</h2>
+        <h3>TIGER Products</h3>
+        <p><strong>T</strong>opologically <strong>I</strong>ntegrated <strong>G</strong>eographic <strong>E</strong>ncoding and <strong>R</strong>eferencing</p>
+    </section>
+
+    <section>
+        <h2>Shape files</h2>
+        <p>Boundaries (i.e state, county, census block), roads, address information, water features, etc...</p>
+
+        <aside class="notes">
+            also rivers, railroads, dirt roads, tracks
+        </aside>
+    </section>
+
+    <section>
+        <h2>Geo databases</h2>
+        <p>Boundaries, Population Counts, Housing Unit Counts, 2010 Census Demographic Profile 1 attributes, etc...</p>
+
+        <aside class="notes">
+            <p>
+                school districts, addresses, populations, demographics etc...
+            </p>
+            <p>explore their Interactive website</p>
+        </aside>
+
+    </section>
+</section>
+
+
+<!--Strategies for partitioning large data-->
+<section>
+
+    <section>
+        <h2>Case Study</h2>
+        <h5>National Telecoms Provider</h5>
+        <p>
+            <img src="images/case1-data-sources.png" height="580"/>
+        </p>
+
+        <aside class="notes">
+            <p>Case study based on national telecoms client - 6th largest in the US</p>
+            <p>consolidate data from various sources into a single coherent dataset: NBM -> National Broadband Map</p>
+            <p>Lots of Data!</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Big Data</h2>
+        <ul>
+            <li>6,000,000 Customers and Prospects</li>
+            <li>7,000,000 Road segments - each segment containing multiple Lat/Lng points - 63,000,000,000 Lat/Lng pairs</li>
+            <li>4,500,000 Cable and Fiber segments - 55,000,000 Lat/Lng pairs</li>
+            <li>700,000 Census Blocks - 51,000,000 Lat/Lng pairs</li>
+        </ul>
+
+        <aside class="notes">
+            <p>Greatest challenge was how to display 150,000,000,000 lat/long pairs</p>
+            <p>KML Layer was discounted due to restrictions / limitations</p>
+            <p>wrote a custom GeoJSON API server</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Bringing it all Together</h2>
+        <ul>
+            <li class="fragment roll-in">
+                RDBMS - PostgreSQL 9.x
+                <ul class="fragment roll-in">
+                    <li>Fast, free and feature rich</li>
+                    <li>SQL and NoSQL via HSTORE and JSON data types</li>
+                    <li>Extensions</li>
+                </ul>
+            </li>
+
+            <li class="fragment roll-in">
+                Geographic Processing - PostGIS 2
+                <ul class="fragment roll-in">
+                    <li>Processing and analytic functions for splicing, dicing, morphing, reclassifying, intersecting, and collecting/unioning with the power of SQL</li>
+                    <li>Rendering and importing for standard textual formats such as KML,GML, SHP, GeoJSON,GeoHash and WKT using SQL</li>
+                </ul>
+            </li>
+
+            <li class="fragment roll-in">
+                Data Output - GeoJSON
+                <ul class="fragment roll-in">
+                    <li>Natively produced by PostGIS</li>
+                    <li>Native JavaScript object; requires no serialisation/de-serialisation on either the Server (nodeJS) or the Browser</li>
+                </ul>
+            </li>
+        </ul>
+
+        <aside class="notes">
+            <p>Postgres: downloaded, merged and loaded all data into a database</p>
+            <p>PostGIS: Geography + SQL. i.e. select roads in an area; select locations near these roads, etc</p>
+            <p>GeoJSON: easily manipulated using JavaScript: iteration, filtering, mapping, etc</p>
+        </aside>
+
+    </section>
+
+
+    <section>
+        <h2>Data Partitioning</h2>
+        <p>Break down data into geographic partitions</p>
+
+        <ul>
+            <li>National View - with Summaries</li>
+            <li>State View - with Summaries</li>
+            <li>City View - with Summaries</li>
+            <li>Asset View</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>National View</h2>
+        <p>
+            <img src="images/case1-national1.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            Shows summaries on a national level
+        </aside>
+    </section>
+
+    <section>
+        <h2>State View</h2>
+        <p>
+            <img src="images/case1-state1.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            Shows summaries at a wirecenter level. Each boundary represents a wirecenter.
+        </aside>
+    </section>
+
+    <section>
+        <h2>City View</h2>
+        <p>
+            <img src="images/case1-exchange1.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            Shows summaries at wirecenter or city level. Each boundary represents a census block.
+        </aside>
+    </section>
+
+    <section>
+        <h2>Asset View</h2>
+        <p>
+            <img src="images/case1-asset1.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>This is the lowest level. Previous stages were drill-down views with summaries.</p>
+            <p>User interacts with the asset database at this level:</p>
+            <ul>
+                <li>wirecenter, remote terminals, copper and fiber cables</li>
+                <li>customers on a street level</li>
+                <li>service boundaries</li>
+            </ul>
+        </aside>
+
+    </section>
+
+
+</section>
+
+
+<section>
+    <section>
+        <h2>Still Too Much Data!</h2>
+        <p>
+            <img src="images/google-maps-copious-data1.png" />
+        </p>
+
+        <aside class="notes">
+            <p>Google Maps JavaScript API and browser speed limitations. Noticeable degradation in performance:</p>
+            <ul>
+                <li>few thousand markers, lines, circles</li>
+                <li>Lag when moving around the map</li>
+                <li>clutter</li>
+            </ul>
+        </aside>
+
+    </section>
+    
+    <section>
+        <h2>Marker Clustering</h2>
+        <p>
+            <img src="images/maps-clustering.png" alt=""/>
+        </p>
+
+        <aside class="notes">
+            <p>Modern browsers are cable of managing large data in memory. The lag comes from rendering too much data</p>
+            <p>Clustering groups close data points and summarises them by zoom level</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Simplification</h2>
+        <p>Adjust geometry accuracy based on map zoom levels. i.e. simplify road segments at higher zoom.</p>
+        <p>PostGIS provides the ST_Simplify function to simplify geometry. Simplify.js can do the same on the browser.</p>
+
+        <aside class="notes">
+            <p>Don't need thousands of lat/lngs to render a few pixel sized road segment on a map, nor a state boundary at high accuract when zoomed out to a country level</p>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Viewport Limiting</h2>
+        <img src="images/viewport.png" alt=""/>
+
+        <aside class="notes">
+            <p>PostGIS is ideal for this as we can easily limit data by window bounds</p>
+        </aside>
+    </section>
+    
+    <section>
+        <img src="images/viewportstart.png" alt=""/>
+
+        <aside class="notes">
+            <p>PostGIS is ideal for this as we can easily limit data by window bounds</p>
+        </aside>
+    </section>
+
+    <section>
+        <img src="images/viewportfinish.png" alt=""/>
+    </section>
+
+    <section>
+        <h2>Fusion Tables</h2>
+        <ul>
+            <li>Server-side Rendering</li>
+            <li>Easily upload and manage data</li>
+            <li>Provides an SQL like query interface to uploaded data</li>
+            <li>Not suited for large datasets (!> 250MB per table) nor frequently updated data</li>
+        </ul>
+    </section>
+
+</section>
+
+<section>
+    <h2>Google Maps</h2>
+    <h2>JavaScript API V3</h2>
+    <h4>Implementation Strategies using AngularJS</h4>
+
+    <aside class="notes">
+        Technical section
+        <ul>
+            <li>Walk through a few Google Maps JavaScript API examples</li>
+            <li>Adding a marker and drawing a polygon</li>
+        </ul>
+    </aside>
+</section>
+
+<section>
+    <section>
+        <h2>Initializing a Map</h2>
+
+            <pre><code class="language-html" style="max-height: 650px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1.0, user-scalable=no&quot; /&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    &lt;/style&gt;
+    &lt;script type=&quot;text/javascript&quot;
+      src=&quot;https://maps.googleapis.com/maps/api/js?sensor=false&quot;&gt;
+    &lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById(&quot;map-canvas&quot;),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;map-canvas&quot;/&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+
+        <aside class="notes">
+            highlight:
+            <ul>
+                <li>script src</li>
+                <li>map options: zoom and starting position</li>
+                <li>target element</li>
+            </ul>
+        </aside>
+
+
+    </section>
+
+    <section>
+        <h2>Live Map</h2>
+        <iframe width="800" height="600" src="frames/map1.html" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h2>Adding a Marker</h2>
+        <pre><code style="max-height: 500px;">
+function initialize() {
+  var myLatlng = new google.maps.LatLng(40.714623,-74.006605);
+  var mapOptions = {
+    zoom: 10,
+    center: myLatlng
+  }
+  var map = new google.maps.Map(
+            document.getElementById('map-canvas'),
+            mapOptions
+          );
+
+  var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: 'Hello World!'
+  });
+}
+        </code></pre>
+
+
+        <aside class="notes">
+            highlight:
+            <ul>
+                <li>Lat Lng object</li>
+                <li>marker</li>
+            </ul>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>Marker</h2>
+        <iframe width="800" height="600" src="frames/map2.html" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h2>The Bermuda Triangle</h2>
+        <pre><code style="max-height: 600px;">
+function initialize() {
+  var mapOptions = {
+    zoom: 5,
+    center: new google.maps.LatLng(24.886436490787712, -70.2685546875),
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  };
+
+  var bermudaTriangle;
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  // Define the LatLng coordinates for the polygon's path.
+  var triangleCoords = [
+    new google.maps.LatLng(25.774252, -80.190262),
+    new google.maps.LatLng(18.466465, -66.118292),
+    new google.maps.LatLng(32.321384, -64.75737),
+    new google.maps.LatLng(25.774252, -80.190262)
+  ];
+
+  // Construct the polygon.
+  bermudaTriangle = new google.maps.Polygon({
+    paths: triangleCoords,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+
+  bermudaTriangle.setMap(map);
+}
+
+            </code></pre>
+
+
+        <aside class="notes">
+            highlight:
+            <ul>
+                <li>Coordinate array</li>
+                <li>polygon object: highlight stroke, opacity</li>
+            </ul>
+        </aside>
+
+    </section>
+
+    <section>
+        <iframe width="800" height="600" src="frames/map3.html" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>AngularJS</h2>
+        <p>
+            HTML is great for declaring static documents, but it falters when we try to use it for declaring dynamic views in web-applications.
+        </p>
+        <p style="padding-top: 10px;">
+            AngularJS lets you <strong><em style="color: #c2ccd1">extend HTML vocabulary</em></strong> for your application. The resulting environment is extraordinarily expressive, readable, and quick to develop.
+        </p>
+
+        <aside class="notes">
+            highlight:
+            <ul>
+                <li>Sponsored by and used internaly by Google</li>
+                <li>For Dart developers, Google also sponsors angular-dart  </li>
+            </ul>
+        </aside>
+
+    </section>
+
+    <section>
+        <h2>HTML Components</h2>
+        <p>
+            HTML Components is a method of creating HTML elements that encapsulate a behaviour and hides specifics internally while exposing a limited number of
+            public interfaces.
+        </p>
+        <p style="padding-top: 10px;">
+            An HTML5 video player, for example, hides the complexity of video rendering, streaming, audio synchronisation and only exposes a limited number of
+            interfaces such as: stop, play, pause etc...
+        </p>
+
+        <aside class="notes">
+            <p>Desktop developers are familiar with components as used in .Net and Embarcadero Delphi - previously Borland Delphi</p>
+            <p>developer would drag and drop a component and hook up component event handlers</p>
+        </aside>
+
+    </section>
+    
+    <section>
+        <h2>HTML5 Video Player - Shadow DOM</h2>
+        <img src="images/video-shadow-dom.jpg" alt=""/>
+
+        <aside class="notes">
+            <p>shadow DOM can be viewed in Chrome by enabling "Show Shadow DOM" in Settings -> general -> elements</p>
+            <p>Used internally for a few years by browser vendors: i.e. Firefox, Chrome, etc...</p>
+        </aside>
+    </section>
+    
+
+    <section>
+        <h2>HTML/Web Component</h2>
+        <h2>Implementations</h2>
+        <ul>
+            <li>Shadow DOM</li>
+            <li>Polymer</li>
+            <li>Ember.Component</li>
+            <li>AngularJS Directives</li>
+            <li>X Tags</li>
+            <li>Etc...</li>
+        </ul>
+
+        <aside class="notes">
+            <p>Still a concept with no formal definition</p>
+            <p>various implementations; i.e. Ember.Component and AngularJS</p>
+            <p>still evolving and no clear winner</p>
+        </aside>
+
+    </section>
+
+</section>
+
+<section>
+
+    <section>
+        <h2>Define A Declarative HTML Vocabulary</h2>
+        <pre><code>
+            &lt;base-map&gt;&lt;/base-map&gt;
+        </code></pre>
+
+        <p>Or</p>
+
+        <pre><code>
+            &lt;div data-base-map&gt;&lt;/div&gt;
+        </code></pre>
+
+        <p>
+            <strong><code>base-map</code></strong> is responsible for instantiating and rendering a basic map and nothing more.
+        </p>
+        <p>
+            Any drawing, such as rendering Markers, PolyLines etc will be delegated to nested map components.
+        </p>
+
+        <aside class="notes">
+            Goals:
+            <ul>
+                <li>Write code once</li>
+                <li>abstract away implementation</li>
+                <li>variable scope isolation - </li>
+            </ul>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Base Map Directive</h2>
+        <iframe width="800" height="600" src="frames/map4.html" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+</section>
+
+<section>
+    <section>
+        <h2>Map Components</h2>
+    </section>
+
+    <section>
+        <h2>Zoom Control</h2>
+        <p>A trivial example that uses the <strong><code>base-map</code></strong> Directive but augments it with a basic Zoom control. </p>
+        <pre><code>
+&lt;div data-base-map&gt;
+  &lt;div data-map-control-zoom&gt;&lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            Very basic example that shows custom map controls. Note that the Maps API provides control customisation.
+        </aside>
+    </section>
+
+    <section>
+        <h2>Zoom Control</h2>
+        <iframe width="800" height="600" src="frames/map5.html" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h2>Ruler Control</h2>
+
+        <p>
+            This is a non trivial example that adds a ruler component that displays the distance of a drawn path.
+        </p>
+
+        <pre><code>
+&lt;div data-base-map&gt;
+    &lt;div data-map-control-ruler&gt;&lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Ruler Control</h2>
+        <iframe width="800" height="600" src="frames/map6.html" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h2>Combining Components</h2>
+        <p>
+            Since AngularJS Directives are isolated, they can be combined...
+        </p>
+        <pre><code>
+&lt;div data-base-map&gt;
+    &lt;div data-map-control-zoom&gt;&lt;/div&gt;
+    &lt;div data-map-control-ruler&gt;&lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            <p>An example that demonstrates adding a non-native control</p>
+            <p>re-usable - only needs a reference to a map</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Combining Zoom and Ruler</h2>
+
+        <iframe width="800" height="600" src="frames/map7.html" frameborder="0" allowfullscreen></iframe>
+
+        <aside class="notes">
+            <p>Shows scope isolation</p>
+            <p>logo like ability to add incremental functionality</p>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Multiple Maps</h2>
+        <pre><code style="max-height: 500px;">
+    &lt;div data-base-map&gt;
+        &lt;div data-map-control-zoom&gt;&lt;/div&gt;
+        &lt;div data-map-control-ruler&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div data-base-map&gt;
+        &lt;div data-map-control-zoom&gt;&lt;/div&gt;
+        &lt;div data-map-control-ruler&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div data-base-map&gt;
+        &lt;div data-map-control-zoom&gt;&lt;/div&gt;
+        &lt;div data-map-control-ruler&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div data-base-map&gt;
+        &lt;div data-map-control-zoom&gt;&lt;/div&gt;
+        &lt;div data-map-control-ruler&gt;&lt;/div&gt;
+    &lt;/div&gt;
+        </code></pre>
+    </section>
+
+    <section>
+        <h2>Multiple Maps</h2>
+
+        <iframe width="820" height="615" src="frames/map8.html" frameborder="0" allowfullscreen></iframe>
+
+        <aside class="notes">
+            <p>My favourite example. Imagine using jQuery to implement similar functionality.</p>
+            <p>More so if each instance would have different behaviour.</p>
+        </aside>
+    </section>
+
+</section>
+
+<section>
+    <section>
+        <h2>Big Picture</h2>
+        <ul>
+            <li>Encapsulate map and business data into components</li>
+            <li>Greater re-use and per view customisations</li>
+            <li>Write less code</li>
+        </ul>
+
+        <aside class="notes">
+            boils down to:
+            <p>we want to write less code - and write it once</p>
+            <p>faster iterations without worrying about specifics</p>
+        </aside>
+    </section>
+
+    <section>
+        <img src="images/map-example-2.png" alt=""/>
+
+        <aside class="notes">
+            An actual product screen- shot:
+            <ul>
+                <li>multiple layers</li>
+                <li>multiple data sources, some shared by more than one component</li>
+                <li>performance is a factor</li>
+                <li>inter component communication - i.e. button bar to map layers, prospect list to current map content</li>
+            </ul>
+        </aside>
+    </section>
+
+    <section>
+        <h2>Compound Component View - HTML</h2>
+        <pre><code style="max-height: 600px;">
+&lt;div id=&quot;route-map&quot;&gt;
+    &lt;div data-ng-include=&quot;partial('navbar')&quot;&gt;&lt;/div&gt;
+
+    &lt;div data-filter-bar=&quot;&quot;
+         data-visible-buttons=&quot;visibleButtons&quot;
+         data-toggled-buttons=&quot;toggledButtons&quot;
+         data-loading-buttons=&quot;loadingButtons&quot;
+         data-on-click-button=&quot;toggleLayer(layer, active)&quot;
+      &gt;
+    &lt;/div&gt;
+
+    &lt;div data-list-businesses=&quot;&quot;
+         data-buildings=&quot;buildings&quot;
+         data-business-type=&quot;prospects&quot;
+         data-on-click-business=&quot;clickBusiness(id)&quot;
+         data-selectable=&quot;true&quot;
+      &gt;
+    &lt;/div&gt;
+
+    &lt;div data-map=&quot;&quot;
+      &gt;
+        &lt;div data-map-marker-buildings=&quot;&quot;
+             data-buildings=&quot;buildings&quot;
+             data-info-window-template-url=&quot; info/prospect-building-info &quot;
+          &gt;
+        &lt;/div&gt;
+
+        &lt;div data-map-marker-splices=&quot;&quot;
+             data-splice-points=&quot;splicePoints&quot;
+          &gt;
+        &lt;/div&gt;
+
+        &lt;div data-aro-map-heat-opportunity=&quot;&quot;
+             data-opportunity=&quot;opportunity&quot;
+          &gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+        </code></pre>
+
+        <aside class="notes">
+            Highlight:
+            <ul>
+                <li>filter bar</li>
+                <li>naming conventions</li>
+                <li>business data source is used in: list-buildings, marker-buildings</li>
+                <li>three layers; three directives</li>
+            </ul>
+        </aside>
+    </section>
+
+</section>
+
+<section>
+    <h1>Questions?</h1>
+
+    <div class="contact-container">
+        <p>Need a Google Maps application?</p>
+        <div class="details">
+            <img class="kuty" src="images/kuty.png" height="200"/>
+            <div style="margin-top: 22px;"><strong>Kuty Shalev</strong></div>
+            <div>President</div>
+
+            <div class="contact">
+                <div>kuty@clevertech.biz</div>
+                <div>+1 (888) 494-1260</div>
+                <div><img src="images/twitter.png" alt=""/> @kuty</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+</div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+
+</body>
+</html>
