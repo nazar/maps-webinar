@@ -1,0 +1,134 @@
+img.clear-img {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.clevertech-header, .clevertech-header .background, .clevertech-header .forground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+}
+
+.clevertech-header .background {
+    background-color: white;
+    opacity: 0.9;
+}
+
+
+.clevertech-header .title {
+    position: fixed;
+    top: 9px;
+    left: 10px;
+
+    font-family: sans-serif;
+    font-size: 13px;
+}
+
+.clevertech-header .logo {
+    position: fixed;
+    right: 10px;
+    top: 3px;
+}
+
+.clevertech-header .logo img {
+    height: 25px;
+}
+
+.intro-container {
+    position: relative;
+
+    width: 1000px;
+    height: 600px;
+}
+
+.intro-container p {
+    text-align: left;
+}
+
+.intro-container .kuty {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+}
+
+.intro-container .nazar {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+}
+
+.intro-container .kuty .img, .intro-container .nazar .img {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 100px;
+    background-size: 200px !important;
+}
+
+.intro-container .kuty .img {
+    float: left;
+    background: url(../images/kuty.png) no-repeat;
+}
+
+.intro-container .kuty p {
+    padding-left: 250px;
+}
+
+.intro-container .nazar p {
+    padding-right: 250px;
+}
+
+.intro-container .nazar .img {
+    float: right;
+    background: url(../images/nazar.png)  no-repeat;
+}
+
+
+
+.contact-container {
+    padding-top: 40px !important;
+}
+
+.contact-container img {
+    border: none !important;
+}
+
+.contact-container .kuty  {
+    float: left;
+    margin : 20px;
+}
+
+.contact-container .details {
+    margin: auto;
+
+    padding-top: 1px;
+
+    font-size: 30px;
+    line-height: 33px;
+
+    text-align: left;
+    width: 600px;
+
+}
+
+.contact-container .contact {
+    line-height: 37px;
+    padding-top: 25px;
+}
+
+.contact-container .contact img {
+    margin: 0;
+    padding: 0;
+
+    margin-bottom: -3px;
+
+    height: 30px;
+    background: transparent !important;
+    box-shadow: none;
+}
+
